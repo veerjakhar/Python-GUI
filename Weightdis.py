@@ -5,12 +5,12 @@ root.geometry("900x200")
 root.title("Weight Distributer")
 
 def frompound():
-    pounds = float(lbsentry.get())
+    pounds = float(lbsentry_value.get())
 
     g = pounds * 453.592
     kg = pounds * 0.453592
     flz = pounds * 16
-    
+
     gentery.delete("1.0", END)
     gentery.insert(END, g)
 
@@ -20,12 +20,12 @@ def frompound():
     flzentry.delete("1.0", END)
     flzentry.insert(END, flz)
 
-pounds = StringVar()
+lbsentry_value = StringVar()
 
 lbs = Label(root, text = "Enter the weight in pounds")
 lbs.grid(row = 1, column = 1)
 
-lbsentry = Entry(root, width = 30)
+lbsentry = Entry(root, width = 30, textvariable = lbsentry_value )
 lbsentry.grid(row = 1, column = 2)
 
 conv = Button(root, text = "Convert", command = frompound)
@@ -43,8 +43,8 @@ flz.grid(row = 2, column = 3)
 gentery = Text(root, width = 30, height = 1)
 gentery.grid(row = 3, column = 1)
 
-lbsentry = Text(root, width = 30, height = 1)
-lbsentry.grid(row = 3, column = 2)
+kgentry = Text(root, width = 30, height = 1)
+kgentry.grid(row = 3, column = 2)
 
 flzentry = Text(root, width = 30, height = 1)
 flzentry.grid(row = 3, column = 3)
