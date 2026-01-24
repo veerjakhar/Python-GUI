@@ -15,8 +15,13 @@ def buttonkk():
 def buttongg():
     global numbered
     numberged = numberg.get()
+    numberged = int(numberged)
     if numbered > numberged:
-        messagebox.showerror('showerror', 'The number choosen is larger')
+        messagebox.showerror('showerror', 'The number that the computer choose is larger')
+    elif numbered < numberged:
+        messagebox.showerror('showerror', 'The number that the computer choose is smaller')
+    elif numbered == numberged:
+        messagebox.showerror('showerror', '!YOU GOT IT CORRECT!')
 
 
 welec = Label(root, text = "Welcome to our game!")
@@ -39,5 +44,7 @@ numberg.place(x = 10, y = 160)
 
 guessb = Button(root, text = "Guess", command = buttongg)
 guessb.place(x = 400, y = 160)
+
+correct = Label(root, text = "Start Guessing")
 
 root.mainloop()
