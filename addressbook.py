@@ -1,5 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
+from tkinter.ttk import *
+from tkinter.filedialog import *
+import os
 
 root = Tk()
 root.title('My Address Book')
@@ -13,6 +16,12 @@ def clearall():
     mobile2.delete(0, END)
     email2.delete(0, END)
     birthday2.delete(0, END)
+
+def reset():
+    clearall()
+    listbox.delete(0, 8)
+    myaddressbook.clear()
+    name2.configure(text = 'My Address Book')
 
 def updatefile():
     key = name2.get()
@@ -37,6 +46,14 @@ def edit():
     else:
         messagebox.showerror('showerror', 'No Name Selected')
 
+def save_file():
+    fout =  asksaveasfile(defaultextension = ".txt")
+    if fout:
+        print(myaddressbook, file = fout)
+        reset()
+    else:
+        messagebox.showinfo('showinfo', "Warning, Addressbook not saved")
+
 def delete_item():
     index = listbox.curselection()
     if index:
@@ -46,11 +63,40 @@ def delete_item():
     else:
         messagebox.showerror('showerror', 'No Name Selected')
 
+def display(event):
+        newwindow = Toplevel(root)
+        index = listbox.curselection()
+        contact = ""
+        if index:
+            key = listbox.get(index)
+            contact = "NAME: " + key + "\n \n"
+            details = myaddressbook[key]
+            contact += "ADDRESS: " + details[1] + "\n"
+            contact += "MOBILE: " + details[2] + "\n"
+            contact += "EMAIL: " + details[3] + "\n"
+            contact += "BIRTHDAY: " + deatails[4] + "\n"
+
+        lbl = Label(newwindow)
+        lbl.grid(row = 0, column = 0)
+        lbl.configure(text = contact)
+        reset()
+
+def openfile():
+    global myaddressbook
+    reset()
+    fin = askopenfile(title = 'openfile')
+    if fin:
+        myaddressbook = eval(fin.read())
+        for key in myaddressbook.keys():
+            listbox.insert(END, key)
+            name2.configure(text = os.path.basename(fin.name))
+    else:
+        messagebox.showinfo('showinfo', "Warning, No Addressbook Opened")
 
 lbl1 = Label(root, text = "My Address Book")
 lbl1.grid(row = 0, column = 1)
 
-openb = Button(root, text = "Open")
+openb = Button(root, text = "Open", command = openfile)
 openb.grid(row = 0, column = 3)
 
 listbox = Listbox(root, width = 30, height = 15)
@@ -95,7 +141,7 @@ deleb.grid(row = 7, column = 2, pady = 5)
 upadb = Button(root, text = 'Update/Add', command = updatefile)
 upadb.grid(row = 7, column = 4, pady = 5)
 
-saveb = Button(root, text = 'Save', width = 30)
+saveb = Button(root, text = 'Save', width = 30, command = save_file)
 saveb.grid(row = 8, column = 0, columnspan = 3, pady = 10, padx = 15)
 
 
