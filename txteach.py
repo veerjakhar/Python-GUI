@@ -23,6 +23,20 @@ def play():
     myobj.save("Convert.mp3")
     os.system("afplay convert.mp3")
 
+def translate():
+    R = sr.Recognizer() 
+    with sr.Microphone() as source:
+        print("Speak Anything")
+        audio =  R.listen(source)
+
+        try:
+            text = R.recognize_google(audio)
+        except:
+            text = "Sorry Could Not Recognise Your Voice"
+        
+        sentry.delete(1.0, END)
+        sentry.insert(END, text)
+
 
 
 
@@ -38,7 +52,7 @@ subutton.place(x = 250, y = 100)
 sentry = Entry(frame2, width = 45, font = 14)
 sentry.place(x = 130, y = 200)
 
-textutton = Button(frame2, text = "Click on me to start recording", width = 20, )
+textutton = Button(frame2, text = "Click on me to start recording", width = 20, command = translate)
 textutton.place(x = 250, y = 152)
 
 textutton = Button(frame2, text = "Save the recording", width = 20, )
