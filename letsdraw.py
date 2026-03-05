@@ -60,8 +60,8 @@ class Paint(object):
 
         if self.old_x is not None and self.old_y is not None:
             self.c.create_line(self.old_x, self.old_y, event.x, event.y, width = self.line_width, fill = paint_color, capstyle = ROUND, smooth = TRUE, splinesteps = 36)
-            self.old_x = event.x
-            self.old_y = event.y
+        self.old_x = event.x
+        self.old_y = event.y
 
     def reset(self, event):
         self.old_x, self.old_y = None, None
