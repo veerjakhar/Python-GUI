@@ -7,13 +7,13 @@ class Paint(object):
     
     def __init__(self):
         self.root = Tk()
-        self.pen_button = Button(self.root, text = 'Pen')
+        self.pen_button = Button(self.root, text = 'Pen', command = self.use_pen)
         self.pen_button.grid(row = 0, column = 0)
-        self.brushbutton = Button(self.root, text = 'Brush')
+        self.brushbutton = Button(self.root, text = 'Brush', command = self.use_brush)
         self.brushbutton.grid(row = 0, column = 1)
-        self.colorbutton = Button(self.root, text = 'Color')
+        self.colorbutton = Button(self.root, text = 'Color', command = self.choose_color)
         self.colorbutton.grid(row = 0, column = 2)
-        self.eraserbutton = Button(self.root, text = 'Eraser')
+        self.eraserbutton = Button(self.root, text = 'Eraser', command = self.use_eraser)
         self.eraserbutton.grid(row = 0, column = 3)
         self.choose_size_button = Scale(self.root, from_= 1, to = 10, orient = HORIZONTAL)
         self.choose_size_button.grid(row = 0, column = 4)
@@ -26,12 +26,12 @@ class Paint(object):
     def setup(self):
         self.old_x = None
         self.old_y = None
-        self.line_width = self.choose_size_button.get()
+        self.line_width = self.DEFUALT_PEN_SIZE
         self.color = self.DEFAULT_COLOR
         self.eraser_on = False
         self.active_button = self.pen_button
-        self.c.bind('<B1-Motion>', self.paint)
-        sel.c.bind('<ButtonRelease-1>', self.reset)
+        self.c.bind('<B1-Motion>', self.use_paint)
+        self.c.bind('<ButtonRelease-1>', self.reset)
 
     def use_pen(self):
         self.activate_button(self.pen_button)
@@ -58,14 +58,14 @@ class Paint(object):
 
         if self.old_x and self.old_y:
             self.c.create_line(self.old_x, self.old_y, event.x, event.y, width = self.line_width, fill = paint_color, capstyle = ROUND, smooth = TRUE, splinesteps = 36)
-            self.old_x = even.x
-            self.old_y = even.y
+            self.old_x = event.x
+            self.old_y = event.y
 
-        def reset(self, event):
-            self.old_x, self.old_y = None, None
+    def reset(self, event):
+        self.old_x, self.old_y = None, None
 
 if __name__ == '__main__':
-    use_paint()
+    Paint()
 
         
 
