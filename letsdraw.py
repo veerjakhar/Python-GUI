@@ -41,7 +41,9 @@ class Paint(object):
 
     def choose_color(self):
         self.eraser_on = False
-        self.color = askcolor(color = self.color)
+        color = askcolor(color = self.color)
+        if color[1] is not None:
+            self.color = color[1]
         
     def use_eraser(self):
         self.activate_button(self.eraserbutton, eraser_mode = True)
@@ -56,7 +58,7 @@ class Paint(object):
         self.line_width = self.choose_size_button.get()
         paint_color = 'white' if self.eraser_on else self.color
 
-        if self.old_x and self.old_y:
+        if self.old_x is not None and self.old_y is not None:
             self.c.create_line(self.old_x, self.old_y, event.x, event.y, width = self.line_width, fill = paint_color, capstyle = ROUND, smooth = TRUE, splinesteps = 36)
             self.old_x = event.x
             self.old_y = event.y
